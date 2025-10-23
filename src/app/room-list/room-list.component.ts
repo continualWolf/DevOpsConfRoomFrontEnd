@@ -3,13 +3,12 @@ import {RoomCardComponent} from "../room-card/room-card.component";
 import {ConferenceRoom} from "../interfaces/room";
 
 @Component({
-  selector: 'app-room-list',
-  standalone: true,
-  imports: [
-    RoomCardComponent
-  ],
-  templateUrl: './room-list.component.html',
-  styleUrl: './room-list.component.css'
+    selector: 'app-room-list',
+    imports: [
+        RoomCardComponent
+    ],
+    templateUrl: './room-list.component.html',
+    styleUrl: './room-list.component.css'
 })
 export class RoomListComponent {
  public roomList: ConferenceRoom[] = [
