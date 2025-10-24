@@ -1,0 +1,186 @@
+@if (isBookRoomWizardVisible)
+{
+  <div class="fixed inset-0 bg-black/30 z-40"></div>
+
+  <div class="fixed inset-0 flex items-center justify-center z-50" role="dialog" aria-modal="true" aria-labelledby="booking-title">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg mx-4 overflow-hidden">
+      <div class="px-6 py-4 border-b">
+        <h1 id="booking-title" class="text-xl font-semibold text-gray-900">
+          {{wizardTitle}}
+        </h1>
+      </div>
+
+      @if(wizardStep == 1){
+        <div class="px-6 py-4 text-gray-700">
+          <div class="flex flex-col md:flex-row gap-4">
+            <div class="w-full md:w-1/2 h-56 md:h-48 rounded-lg overflow-hidden">
+              <img
+                ngSrc="../../assets/20201008-199WaterSt-2_fb.webp"
+                alt="Conference room image"
+              class="w-full h-full object-cover"
+              width="800"
+              height="800"
+              />
+            </div>
+
+            <div class="w-full md:w-1/2 flex flex-col justify-start gap-2">
+              <h3>{{conferenceRoom?.name}}</h3>
+              <p class="text-sm text-gray-600"><b>Location:</b>{{conferenceRoom?.location}}</p>
+              <p class="text-sm text-gray-600"><b>Capacity:</b> xxx</p>
+              <p class="text-sm text-gray-500"><b>Base Cost:</b> {{conferenceRoom?.baseCost | currency:'GBP'}}</p>
+              <p class="text-sm text-gray-500"><b>AC Cost:</b> £xxx</p>
+              <p class="text-sm text-gray-500"><b>Contact:</b> {{conferenceRoom?.contact?.name}} | {{conferenceRoom?.contact?.email}}</p>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            {{conferenceRoom?.description}}
+          </div>
+
+          <div class="mt-4">
+            <div class="flex flex-col md:flex-row gap-3">
+              <label class="w-full md:w-1/2">
+                <span class="block text-xs font-medium text-gray-700 mb-1">Date</span>
+                <input
+                  type="date"
+                  [formControl]="dateFormCtrl"
+                  class="w-full rounded-md border px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  aria-label="Select booking date" />
+              </label>
+
+              <label class="w-full md:w-1/2">
+                <span class="block text-xs font-medium text-gray-700 mb-1">Time</span>
+                <input
+                  type="time"
+                  class="w-full rounded-md border px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  aria-label="Select booking time" />
+              </label>
+            </div>
+          </div>
+        </div>
+      }
+
+      @if(wizardStep == 2){
+        <div class="px-6 py-4 text-gray-700">
+          <div class="flex items-center gap-4 bg-white border rounded-lg p-4 mb-6">
+            <div class="w-16 h-12 rounded-md overflow-hidden flex-shrink-0">
+              <img
+                src="assets/20201008-199WaterSt-2_fb.webp"
+                alt="{{ conferenceRoom?.name ?? 'Room image' }}"
+                class="w-full h-full object-cover"
+              />
+            </div>
+
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-sm font-semibold text-gray-900">{{ conferenceRoom?.name }}</div>
+                  <div class="text-xs text-gray-500">{{ conferenceRoom?.location }}</div>
+                </div>
+
+                <div class="text-right text-sm text-gray-600">
+                  <div class="font-medium">{{dateFormCtrl.value}}</div>
+                  <div class="text-xs"> some time </div>
+                </div>
+              </div>
+
+              <div class="mt-2 text-sm text-gray-700 flex items-center justify-between">
+                <div class="text-xs text-gray-500">Total</div>
+                <div class="text-sm font-semibold text-gray-900">{{ conferenceRoom?.baseCost | currency:'GBP' }}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white border rounded-lg p-4 ">
+            <label class="block mb-3">
+              <span class="text-xs font-medium text-gray-700">Card number</span>
+              <input
+                name="cardNumber"
+                type="text"
+                inputmode="numeric"
+                maxlength="19"
+                placeholder="4242 4242 4242 4242"
+                class="w-full rounded-md border px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+              />
+            </label>
+
+            <div class="flex gap-3">
+              <label class="flex-1">
+                <span class="text-xs font-medium text-gray-700">Expiry</span>
+                <input
+                  name="cardExpiry"
+                  type="text"
+                  maxlength="5"
+                  placeholder="MM/YY"
+                  class="w-full rounded-md border px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+                />
+              </label>
+
+              <label class="w-28">
+                <span class="text-xs font-medium text-gray-700">CVV</span>
+                <input
+                  name="cardCvc"
+                  type="text"
+                  inputmode="numeric"
+                  maxlength="4"
+                  placeholder="123"
+                  class="w-full rounded-md border px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+                />
+              </label>
+            </div>
+          </div>
+        </div>
+      }
+
+      @if(wizardStep == 3){
+        <div class="px-6 py-4 text-gray-700">
+          <div class="flex items-center gap-4 bg-white border rounded-lg p-4 mb-6">
+            <div class="w-16 h-12 rounded-md overflow-hidden flex-shrink-0">
+              <img
+                src="assets/20201008-199WaterSt-2_fb.webp"
+                alt="{{ conferenceRoom?.name ?? 'Room image' }}"
+                class="w-full h-full object-cover"
+              />
+            </div>
+
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-sm font-semibold text-gray-900">{{ conferenceRoom?.name }}</div>
+                  <div class="text-xs text-gray-500">{{ conferenceRoom?.location }}</div>
+                </div>
+
+                <div class="text-right text-sm text-gray-600">
+                  <div class="font-medium"> {{ dateFormCtrl.value }} </div>
+                  <div class="text-xs"> some time </div>
+                </div>
+              </div>
+
+              <div class="mt-2 text-sm text-gray-700 flex items-center justify-between">
+                <div class="text-xs text-gray-500">Total</div>
+                <div class="text-sm font-semibold text-gray-900">{{ conferenceRoom?.baseCost | currency:'GBP' }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4">
+            <p>Your conference room has been reserved. A confirmation email has been sent.</p>
+          </div>
+        </div>
+      }
+
+      <div class="px-6 py-4 border-t flex justify-end space-x-3">
+        @if(wizardCancelButtonVisible){
+          <button (click)="cancelWizard()" type="button"
+                  class="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 text-gray-800">
+            Cancel
+          </button>
+        }
+
+        <button (click)="nextStep()" [disabled]="wizardActionButtonDisabled"  type="button"
+                class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50">
+          {{ wizardActionButtonText }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

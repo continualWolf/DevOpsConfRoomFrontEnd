@@ -1,17 +1,14 @@
 <div class="flex-1 w-full sm:w-[300px] bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200">
-  <!-- Card Header (optional) -->
   <div class="px-6 py-4 border-b border-gray-100">
     <h3 class="text-xl font-semibold text-gray-800">Paddington, London</h3>
   </div>
 
-  <!-- Card Body -->
   <div class="text-gray-600 overflow-hidden">
     <img ngSrc="../../assets/20201008-199WaterSt-2_fb.webp" width="800" height="800" alt="Logo" class="w-full h-full object-cover" />
   </div>
 
-  <!-- Card Footer -->
   <div class="px-6 py-3 bg-gray-50 border-t border-gray-200 flex justify-end">
-    <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors hover:cursor-pointer">
+    <button (click)="selectRoom()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors hover:cursor-pointer">
       Book Now
     </button>
   </div>

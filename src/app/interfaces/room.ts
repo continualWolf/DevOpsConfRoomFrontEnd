@@ -3,6 +3,7 @@ export interface ConferenceRoom {
   name: string;
   location: string;
   baseCost: number;
+  description?: string;
   contact: ContactPerson
 }
 
