@@ -1,7 +1,10 @@
 # =========================================
 # Stage 1: Build the Angular Application
 # =========================================
-ARG NODE_VERSION=24.7.0-alpine
+# =========================================
+# Stage 1: Build the Angular Application
+# =========================================
+ARG NODE_VERSION=22.20.0-alpine
 ARG NGINX_VERSION=alpine3.22
 
 # Use a lightweight Node.js image for building (customizable via ARG)
@@ -37,9 +40,9 @@ COPY nginx.conf /etc/nginx/nginx.conf
 # Copy the static build output from the build stage to Nginx's default HTML serving directory
 COPY --chown=nginx:nginx --from=builder /app/dist/*/browser /usr/share/nginx/html
 
-# Expose port 4200 to allow HTTP traffic
-# Note: The default NGINX container now listens on port 4200 instead of 80
-EXPOSE 4200
+# Expose port 8080 to allow HTTP traffic
+# Note: The default NGINX container now listens on port 8080 instead of 80
+EXPOSE 8080
 
 # Start Nginx directly with custom config
 ENTRYPOINT ["nginx", "-c", "/etc/nginx/nginx.conf"]
