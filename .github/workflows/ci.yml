@@ -1,0 +1,44 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  angular-frontend:
+    name: Angular Frontend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Angular unit tests
+        run: npm run test -- --watch=false --browsers=ChromeHeadless
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: npx playwright test
+
+      - name: Build Docker image for Angular frontend
+        run: docker build -t angular-frontend .
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Push Angular frontend to Docker Hub
+        run: |
+          docker tag angular-frontend ${{ secrets.DOCKER_USERNAME }}/angular-frontend:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/angular-frontend:latest
