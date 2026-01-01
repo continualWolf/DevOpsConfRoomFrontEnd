@@ -24,7 +24,7 @@ export class RoomCardComponent {
     try{
       console.log("entering try catch");
 
-      this.http.post('http://ec2-44-204-101-187.compute-1.amazonaws.com:3000/publishBooking', { "roomId": "123", "date": "12/12/25", "price": "1", "cardNumber": "1231231", "expiry": "12/22/24", "cvv": "234" }).pipe(
+      this.http.post(`${window.location.protocol}//${window.location.host}:3000/publishBooking`, { "roomId": "123", "date": "12/12/25", "price": "1", "cardNumber": "1231231", "expiry": "12/22/24", "cvv": "234" }).pipe(
         catchError(err => {
           console.error(err);
           return EMPTY;
