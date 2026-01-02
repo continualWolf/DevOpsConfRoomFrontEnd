@@ -43,17 +43,18 @@ jobs:
           docker tag angular-frontend ${{ secrets.DOCKER_USERNAME }}/angular-frontend:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/angular-frontend:latest
 
-      - name: Deploy to EC2 with Docker Compose
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.EC2_HOST }}          # 3.239.222.147
-          username: ec2-user
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            cd /home/ec2-user/angular-frontend
+      - name: SSH into EC2 and deploy
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/ec2.pem
+          chmod 600 ~/.ssh/ec2.pem
 
-            docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-
-            docker-compose pull
-            docker-compose up -d --force-recreate
+          ssh -o StrictHostKeyChecking=no \
+              -i ~/.ssh/ec2.pem \
+              ec2-user@3.239.222.147 << 'EOF'
+                cd /home/ec2-user/angular-frontend
+                docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+                docker-compose pull
+                docker-compose up -d --force-recreate
+          EOF
 
