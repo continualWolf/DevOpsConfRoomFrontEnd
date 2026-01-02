@@ -26,9 +26,8 @@
             <div class="w-full md:w-1/2 flex flex-col justify-start gap-2">
               <h3>{{conferenceRoom?.name}}</h3>
               <p class="text-sm text-gray-600"><b>Location:</b>{{conferenceRoom?.location}}</p>
-              <p class="text-sm text-gray-600"><b>Capacity:</b> xxx</p>
               <p class="text-sm text-gray-500"><b>Base Cost:</b> {{conferenceRoom?.baseCost | currency:'GBP'}}</p>
-              <p class="text-sm text-gray-500"><b>AC Cost:</b> £xxx</p>
+              <p class="text-sm text-gray-500"><b>AC Cost:</b>{{acCost | currency: 'GBP'}}</p>
               <p class="text-sm text-gray-500"><b>Contact:</b> {{conferenceRoom?.contact?.name}} | {{conferenceRoom?.contact?.email}}</p>
             </div>
           </div>
@@ -44,6 +43,7 @@
                 <input
                   type="date"
                   [formControl]="dateFormCtrl"
+                  (change)="dateChanged()"
                   class="w-full rounded-md border px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
                   aria-label="Select booking date" />
               </label>
@@ -77,18 +77,17 @@
 
               <div class="mt-2 text-sm text-gray-700 flex items-center justify-between">
                 <div class="text-xs text-gray-500">Total</div>
-                <div class="text-sm font-semibold text-gray-900">{{ conferenceRoom?.baseCost | currency:'GBP' }}</div>
+                <div class="text-sm font-semibold text-gray-900">{{ totalCost | currency:'GBP' }}</div>
               </div>
             </div>
           </div>
-
-          <div class="bg-white border rounded-lg p-4 ">
+          <div class="bg-white border rounded-lg p-4">
             <label class="block mb-3">
               <span class="text-xs font-medium text-gray-700">Card number</span>
               <input
                 name="cardNumber"
                 type="text"
-                inputmode="numeric"
+                [(ngModel)]="cardNumber"
                 maxlength="19"
                 placeholder="4242 4242 4242 4242"
                 class="w-full rounded-md border px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
@@ -101,6 +100,7 @@
                 <input
                   name="cardExpiry"
                   type="text"
+                  [(ngModel)]="cardExpiry"
                   maxlength="5"
                   placeholder="MM/YY"
                   class="w-full rounded-md border px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
@@ -112,7 +112,7 @@
                 <input
                   name="cardCvc"
                   type="text"
-                  inputmode="numeric"
+                  [(ngModel)]="cardCvc"
                   maxlength="4"
                   placeholder="123"
                   class="w-full rounded-md border px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
@@ -120,6 +120,7 @@
               </label>
             </div>
           </div>
+
         </div>
       }
 
