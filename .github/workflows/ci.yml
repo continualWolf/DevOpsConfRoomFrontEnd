@@ -44,20 +44,16 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/angular-frontend:latest
 
       - name: Deploy to EC2 with Docker Compose
-        uses: appleboy/ssh-action@v0.1.7
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
+          host: ${{ secrets.EC2_HOST }}          # 3.239.222.147
+          username: ec2-user
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            cd /home/ec2-user/your-project-folder  # <- where your docker-compose.yml lives
+            cd /home/ec2-user/angular-frontend
 
-            # Log in to Docker Hub
             docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
-            # Rebuild all services with no cache
-            docker-compose build --no-cache
-
-            # Restart all containers
+            docker-compose pull
             docker-compose up -d --force-recreate
 
