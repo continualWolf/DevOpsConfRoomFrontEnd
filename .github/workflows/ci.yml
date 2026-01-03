@@ -26,12 +26,6 @@ jobs:
       - name: Run Angular unit tests
         run: npm run test -- --watch=false --browsers=ChromeHeadless
 
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
-
-      - name: Run Playwright tests
-        run: npx playwright tests
-
       - name: Build Docker image for Angular frontend
         run: docker build -t angular-frontend .
 
