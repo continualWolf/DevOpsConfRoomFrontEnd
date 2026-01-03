@@ -49,7 +49,7 @@ export class BookRoomWizardComponent implements OnInit, OnDestroy {
 
 
     this.http.post<{ temperature: number }>(
-      `${baseURL}/todayTemp`,
+      `${baseURL}:3000/todayTemp`,
       {}
     ).pipe(
       catchError(err => {
