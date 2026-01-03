@@ -42,9 +42,11 @@ export class BookRoomWizardComponent implements OnInit, OnDestroy {
 
   dateChanged(): void {
     const isLocalhost = window.location.hostname === 'localhost';
-    const baseURL = isLocalhost
-      ? 'http://localhost:3000'
-      : `${window.location.protocol}//${window.location.host}:3000`;
+    const baseURL =
+      window.location.hostname === "localhost"
+        ? "http://localhost"
+        : window.location.origin.replace(":4200", "");
+
 
     this.http.post<{ temperature: number }>(
       `${baseURL}/todayTemp`,
@@ -114,7 +116,10 @@ export class BookRoomWizardComponent implements OnInit, OnDestroy {
       try{
         console.log("entering try catch");
 
-        const baseURL = window.location.host.includes("localhost") ? "http://localhost" : window.location;
+        const baseURL =
+          window.location.hostname === "localhost"
+            ? "http://localhost"
+            : window.location.origin.replace(":4200", "");
 
         this.http.post(`${baseURL}:3000/publishBooking`, { "roomId": "133", "date": new Date(), "price": this.conferenceRoom?.baseCost, "cardNumber": this.cardNumber, "expiry": this.cardExpiry, "cvv": this.cardCvc }).pipe(
           catchError(err => {

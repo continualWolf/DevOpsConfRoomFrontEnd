@@ -31,7 +31,10 @@ export class HomeComponent {
     try{
       console.log("entering try catch");
 
-      const baseURL = window.location.host.includes("localhost") ? "http://localhost" : window.location;
+      const baseURL =
+        window.location.hostname === "localhost"
+          ? "http://localhost"
+          : window.location.origin.replace(":4200", "");
 
       this.http.post(`${baseURL}:3000/login`, { "email": this.email, "password": this.password }).pipe(
         catchError(err => {
