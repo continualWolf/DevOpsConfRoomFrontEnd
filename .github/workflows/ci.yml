@@ -45,7 +45,7 @@ jobs:
 
           ssh -o StrictHostKeyChecking=no \
               -i ~/.ssh/ec2.pem \
-              ec2-user@100.48.225.155 << 'EOF'
+              ec2-user@3.228.6.231 << 'EOF'
                 cd home/ec2-user/my-docker-app/
                 docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
                 docker-compose pull
