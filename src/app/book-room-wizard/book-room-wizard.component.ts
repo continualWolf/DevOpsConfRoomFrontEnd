@@ -121,7 +121,7 @@ export class BookRoomWizardComponent implements OnInit, OnDestroy {
             ? "http://localhost"
             : window.location.origin.replace(":4200", "");
 
-        this.http.post(`${baseURL}:3000/publishBooking`, { "roomId": "133", "date": new Date(), "price": this.conferenceRoom?.baseCost, "cardNumber": this.cardNumber, "expiry": this.cardExpiry, "cvv": this.cardCvc }).pipe(
+        this.http.post(`${baseURL}:3000/publishBooking`, { "roomId": "133", "date": new Date(), "price": this.totalCost, "cardNumber": this.cardNumber, "expiry": this.cardExpiry, "cvv": this.cardCvc }).pipe(
           catchError(err => {
             console.error(err);
             return EMPTY;
